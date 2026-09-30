@@ -8,14 +8,22 @@
 </head>
 <body>
   <header>
-    <h1>Enhanced Service Chat Deployment Testing</h1>
-    <p>A very basic sample site, hosted on GitHub Pages.</p>
+    <div class="language-switcher">
+      <label for="languageSelect">Language:</label>
+      <select id="languageSelect">
+        <option value="en_US">English</option>
+        <option value="nl_NL">Nederlands</option>
+        <option value="fr_FR">Français</option>
+      </select>
+    </div>
+    <h1 data-i18n="title">Enhanced Service Chat Deployment Testing</h1>
+    <p data-i18n="subtitle">A very basic sample site, hosted on GitHub Pages.</p>
   </header>
 
   <main>
     <section>
-      <h2>About</h2>
-      <p>This page is a minimal static site used to test deployment via GitHub Pages.</p>
+      <h2 data-i18n="aboutHeading">About</h2>
+      <p data-i18n="aboutBody">This page is a minimal static site used to test deployment via GitHub Pages.</p>
     </section>
   </main>
 
@@ -24,9 +32,52 @@
   </footer>
 
   <script type='text/javascript'>
+	// Salesforce locale code (e.g. 'en_US') the hidden prechat field is named on the deployment.
+	// Update HIDDEN_FIELD_NAME to match whatever Field Name you gave the Hidden Field in
+	// Setup > Embedded Service Deployments > GitHubSiteTestEmbedding > Customize Prechat.
+	var HIDDEN_FIELD_NAME = 'Language';
+	var LANGUAGE_STORAGE_KEY = 'preferredLanguage';
+	var DEFAULT_LANGUAGE = 'en_US';
+
+	var translations = {
+		en_US: {
+			title: 'Enhanced Service Chat Deployment Testing',
+			subtitle: 'A very basic sample site, hosted on GitHub Pages.',
+			aboutHeading: 'About',
+			aboutBody: 'This page is a minimal static site used to test deployment via GitHub Pages.'
+		},
+		nl_NL: {
+			title: 'Enhanced Service Chat Implementatietest',
+			subtitle: 'Een zeer eenvoudige voorbeeldsite, gehost op GitHub Pages.',
+			aboutHeading: 'Over',
+			aboutBody: 'Deze pagina is een minimale statische site om de implementatie via GitHub Pages te testen.'
+		},
+		fr_FR: {
+			title: 'Test de déploiement du chat de service amélioré',
+			subtitle: 'Un site exemple très basique, hébergé sur GitHub Pages.',
+			aboutHeading: 'À propos',
+			aboutBody: "Cette page est un site statique minimal utilisé pour tester le déploiement via GitHub Pages."
+		}
+	};
+
+	function getStoredLanguage() {
+		return localStorage.getItem(LANGUAGE_STORAGE_KEY) || DEFAULT_LANGUAGE;
+	}
+
+	function applyTranslations(language) {
+		var strings = translations[language] || translations[DEFAULT_LANGUAGE];
+		document.querySelectorAll('[data-i18n]').forEach(function (el) {
+			var key = el.getAttribute('data-i18n');
+			if (strings[key]) {
+				el.textContent = strings[key];
+			}
+		});
+		document.documentElement.lang = language.split('_')[0];
+	}
+
 	function initEmbeddedMessaging() {
 		try {
-			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+			embeddedservice_bootstrap.settings.language = getStoredLanguage();
 
 			embeddedservice_bootstrap.init(
 				'00DS800000IrLNL',
@@ -36,10 +87,31 @@
 					scrt2URL: 'https://th-group--qa.sandbox.my.salesforce-scrt.com'
 				}
 			);
+
+			// Hidden prechat field is only settable once the widget has finished bootstrapping.
+			window.addEventListener('onEmbeddedMessagingReady', function () {
+				var hiddenFields = {};
+				hiddenFields[HIDDEN_FIELD_NAME] = getStoredLanguage();
+				embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields(hiddenFields);
+			});
 		} catch (err) {
 			console.error('Error loading Embedded Messaging: ', err);
 		}
 	};
+
+	document.addEventListener('DOMContentLoaded', function () {
+		var storedLanguage = getStoredLanguage();
+		applyTranslations(storedLanguage);
+
+		var select = document.getElementById('languageSelect');
+		select.value = storedLanguage;
+		select.addEventListener('change', function () {
+			localStorage.setItem(LANGUAGE_STORAGE_KEY, select.value);
+			// Reload so the embedded messaging widget re-initializes with the new language,
+			// since embeddedservice_bootstrap.settings.language can only be set before init().
+			location.reload();
+		});
+	});
 </script>
 <script type='text/javascript' src='https://th-group--qa.sandbox.my.site.com/ESWGitHubSiteTest1790782172474/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 </body>
