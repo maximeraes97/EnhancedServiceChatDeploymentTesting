@@ -22,6 +22,44 @@ header {
   margin-left: 0.5rem;
 }
 
+.auth-section {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.auth-section h2 {
+  margin-top: 0;
+}
+
+#loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#loginForm button {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #2b6cb0;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-error {
+  color: #c53030;
+  font-size: 0.85rem;
+}
+
+#authStatus {
+  text-align: center;
+}
+
 main {
   max-width: 640px;
   margin: 2rem auto;
