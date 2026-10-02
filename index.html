@@ -9,8 +9,8 @@
 <body>
   <header>
     <div class="language-switcher">
-      <label for="languageSelect">Language:</label>
-      <select id="languageSelect">
+      <label for="languageSelect" aria-hidden="true">🌐</label>
+      <select id="languageSelect" aria-label="Language">
         <option value="en_US">English</option>
         <option value="nl_NL">Nederlands</option>
         <option value="fr_FR">Français</option>
@@ -21,28 +21,27 @@
   </header>
 
   <section id="loginSection" class="auth-section">
-    <h2 data-i18n="loginHeading">Sign in for authorized chat</h2>
+    <h2 aria-hidden="true">🔐</h2>
     <form id="loginForm">
-      <label for="customerNumber" data-i18n="customerNumberLabel">Customer number</label>
-      <input type="text" id="customerNumber" required />
+      <label for="customerNumber" aria-hidden="true">#</label>
+      <input type="text" id="customerNumber" placeholder="#" aria-label="Customer number" required />
 
-      <label for="email" data-i18n="emailLabel">Email</label>
-      <input type="email" id="email" required />
+      <label for="email" aria-hidden="true">✉</label>
+      <input type="email" id="email" placeholder="you@example.com" aria-label="Email" required />
 
-      <label for="password" data-i18n="passwordLabel">Password</label>
-      <input type="password" id="password" required />
+      <label for="password" aria-hidden="true">🔑</label>
+      <input type="password" id="password" placeholder="••••••••" aria-label="Password" required />
 
-      <button type="submit" data-i18n="loginButton">Log in</button>
-      <p id="loginError" class="login-error" data-i18n="loginError" hidden>Invalid customer number, email or password.</p>
+      <button type="submit" aria-label="Log in">→</button>
+      <p id="loginError" class="login-error" hidden>⚠</p>
     </form>
   </section>
 
   <section id="authStatus" class="auth-section" hidden>
     <p>
-      <span data-i18n="loggedInAs">Logged in as customer</span>
-      <strong id="authCustomerNumber"></strong>
-      (<span id="authEmail"></span>)
-      — <a href="#" id="logoutLink" data-i18n="logoutButton">Log out</a>
+      🪪 <strong id="authCustomerNumber"></strong>
+      · ✉ <span id="authEmail"></span>
+      — <a href="#" id="logoutLink" aria-label="Log out">⎋</a>
     </p>
   </section>
 
@@ -96,43 +95,19 @@
 			title: 'Enhanced Service Chat Deployment Testing',
 			subtitle: 'A very basic sample site, hosted on GitHub Pages.',
 			aboutHeading: 'About',
-			aboutBody: 'This page is a minimal static site used to test deployment via GitHub Pages.',
-			loginHeading: 'Sign in for authorized chat',
-			customerNumberLabel: 'Customer number',
-			emailLabel: 'Email',
-			passwordLabel: 'Password',
-			loginButton: 'Log in',
-			loginError: 'Invalid customer number, email or password.',
-			loggedInAs: 'Logged in as customer',
-			logoutButton: 'Log out'
+			aboutBody: 'This page is a minimal static site used to test deployment via GitHub Pages.'
 		},
 		nl_NL: {
 			title: 'Enhanced Service Chat Implementatietest',
 			subtitle: 'Een zeer eenvoudige voorbeeldsite, gehost op GitHub Pages.',
 			aboutHeading: 'Over',
-			aboutBody: 'Deze pagina is een minimale statische site om de implementatie via GitHub Pages te testen.',
-			loginHeading: 'Log in voor geautoriseerde chat',
-			customerNumberLabel: 'Klantnummer',
-			emailLabel: 'E-mail',
-			passwordLabel: 'Wachtwoord',
-			loginButton: 'Inloggen',
-			loginError: 'Ongeldig klantnummer, e-mailadres of wachtwoord.',
-			loggedInAs: 'Ingelogd als klant',
-			logoutButton: 'Uitloggen'
+			aboutBody: 'Deze pagina is een minimale statische site om de implementatie via GitHub Pages te testen.'
 		},
 		fr_FR: {
 			title: 'Test de déploiement du chat de service amélioré',
 			subtitle: 'Un site exemple très basique, hébergé sur GitHub Pages.',
 			aboutHeading: 'À propos',
-			aboutBody: "Cette page est un site statique minimal utilisé pour tester le déploiement via GitHub Pages.",
-			loginHeading: 'Connectez-vous pour le chat autorisé',
-			customerNumberLabel: 'Numéro de client',
-			emailLabel: 'E-mail',
-			passwordLabel: 'Mot de passe',
-			loginButton: 'Se connecter',
-			loginError: 'Numéro de client, e-mail ou mot de passe invalide.',
-			loggedInAs: 'Connecté en tant que client',
-			logoutButton: 'Se déconnecter'
+			aboutBody: "Cette page est un site statique minimal utilisé pour tester le déploiement via GitHub Pages."
 		}
 	};
 
